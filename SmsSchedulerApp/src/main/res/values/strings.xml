@@ -3,5 +3,6 @@
     <string name="app_name">SmsScheduler</string>
 
     <string name="receiver_phone_number_label">Receiver Number:</string>
+    <string name="message_text_label">Message:</string>
 
 </resources>

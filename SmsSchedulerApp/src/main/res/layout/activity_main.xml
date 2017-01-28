@@ -35,5 +35,30 @@
     />
 
 
+    <TextView
+        android:id="@+id/txtvwMessageTextLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtvwReceiverPhoneNumberLabel"
+        android:layout_marginTop="@dimen/message_text_label_margin_top"
+        android:layout_marginBottom="@dimen/message_text_label_margin_bottom"
+        android:gravity="center_vertical"
+        style="@android:style/TextAppearance.Medium"
+        android:text="@string/message_text_label"
+    />
+
+    <EditText
+        android:id="@+id/edtxMessageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/txtvwMessageTextLabel"
+        android:gravity="left|top"
+        style="@android:style/TextAppearance.Medium"
+    />
+
 
 </RelativeLayout>

@@ -6,4 +6,7 @@
     <dimen name="receiver_phone_number_height">40dp</dimen>
     <dimen name="receiver_phone_number_margin_right">12dp</dimen>
 
+    <dimen name="message_text_label_margin_top">12dp</dimen>
+    <dimen name="message_text_label_margin_bottom">6dp</dimen>
+
 </resources>
