@@ -6,5 +6,6 @@
     <string name="receiver_phone_number_label">Empfängernummer:</string>
     <string name="message_text_label">Nachricht:</string>
     <string name="schedule_sms">Planen</string>
+    <string name="rationale_send_sms">Um eine SMS an %s schicken zu können, braucht die App die Berechtigung zum Senden von SMS</string>
 
 </resources>

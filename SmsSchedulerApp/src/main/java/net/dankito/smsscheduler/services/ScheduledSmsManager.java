@@ -1,5 +1,7 @@
 package net.dankito.smsscheduler.services;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +10,11 @@ import net.dankito.android.util.model.OneTimeJobConfig;
 import net.dankito.android.util.services.AlarmManagerCronService;
 import net.dankito.android.util.services.AndroidFileStorageService;
 import net.dankito.android.util.services.ICronService;
+import net.dankito.android.util.services.IPermissionsManager;
+import net.dankito.android.util.services.PermissionRequestCallback;
+import net.dankito.android.util.services.PermissionsManager;
 import net.dankito.android.util.services.SmsService;
+import net.dankito.smsscheduler.R;
 import net.dankito.utils.services.IFileStorageService;
 
 import org.slf4j.Logger;
@@ -26,6 +32,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   protected SmsService smsService;
 
+  protected IPermissionsManager permissionsManager;
+
   protected IFileStorageService fileStorageService;
 
   protected ScheduledSmses scheduledSMSes;
@@ -35,8 +43,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   }
 
-  public ScheduledSmsManager(Context context) {
-    setupDependencies(context);
+  public ScheduledSmsManager(Activity activity) {
+    setupDependencies(activity);
   }
 
   protected synchronized void setupDependencies(Context context) {
@@ -52,10 +60,25 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     this.smsService = new SmsService();
 
     this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getHighestSchedulesSmsId());
+
+    if(context instanceof Activity) { // only when called from MainActivity, not from BroadcastReceiver's onReceive()
+      permissionsManager = new PermissionsManager((Activity)context);
+    }
   }
 
 
-  public void scheduleSms(ScheduledSms scheduledSms) {
+  public void scheduleSms(final ScheduledSms scheduledSms) {
+    permissionsManager.checkPermission(Manifest.permission.SEND_SMS, R.string.rationale_send_sms, new PermissionRequestCallback() {
+      @Override
+      public void permissionCheckDone(String permission, boolean isGranted) {
+        if(isGranted) {
+          scheduleSmsPermissionGranted(scheduledSms);
+        }
+      }
+    });
+  }
+
+  protected void scheduleSmsPermissionGranted(ScheduledSms scheduledSms) {
     int cronJobId = cronService.scheduleOneTimeJob(new OneTimeJobConfig(scheduledSms.getScheduledTime(), ScheduledSmsManager.class));
 
     scheduledSms.setScheduledSmsId(cronJobId);
