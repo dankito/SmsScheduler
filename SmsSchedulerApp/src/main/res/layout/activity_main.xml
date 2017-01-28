@@ -69,13 +69,24 @@
         android:text="..."
     />
 
+    <TextView
+        android:id="@+id/txtvwReceiverNameFromContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/receiver_name_from_contacts_height"
+        android:layout_below="@+id/edtxReceiverPhoneNumber"
+        android:layout_alignLeft="@+id/edtxReceiverPhoneNumber"
+        android:gravity="center_vertical"
+        style="@android:style/TextAppearance.Medium"
+        android:visibility="gone"
+    />
+
 
     <TextView
         android:id="@+id/txtvwMessageTextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/txtvwReceiverPhoneNumberLabel"
+        android:layout_below="@+id/txtvwReceiverNameFromContacts"
         android:layout_marginTop="@dimen/message_text_label_margin_top"
         android:layout_marginBottom="@dimen/message_text_label_margin_bottom"
         android:gravity="center_vertical"

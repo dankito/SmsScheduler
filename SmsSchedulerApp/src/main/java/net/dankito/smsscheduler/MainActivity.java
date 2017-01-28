@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
   protected EditText edtxReceiverPhoneNumber;
 
+  protected TextView txtvwReceiverNameFromContacts;
+
   protected EditText edtxMessageText;
 
 
@@ -68,9 +72,12 @@ public class MainActivity extends AppCompatActivity {
     setExecuteAtToInitialValue();
 
     edtxReceiverPhoneNumber = (EditText)findViewById(R.id.edtxReceiverPhoneNumber);
+    edtxReceiverPhoneNumber.addTextChangedListener(edtxReceiverPhoneNumberTextWatcher);
 
     Button btnPickReceiverPhoneNumberFromContacts = (Button)findViewById(R.id.btnPickReceiverPhoneNumberFromContacts);
     btnPickReceiverPhoneNumberFromContacts.setOnClickListener(btnPickReceiverPhoneNumberFromContactsClickListener);
+
+    txtvwReceiverNameFromContacts = (TextView)findViewById(R.id.txtvwReceiverNameFromContacts);
 
     edtxMessageText = (EditText)findViewById(R.id.edtxMessageText);
 
@@ -110,11 +117,11 @@ public class MainActivity extends AppCompatActivity {
   protected void getPhoneNumberFromSelectedContact(Intent data) {
     Uri contactData = data.getData();
     Cursor contactCursor = getContentResolver().query(contactData, null, null, null, null);
-    if (contactCursor.moveToFirst()) {
+    if(contactCursor.moveToFirst()) {
       String id = contactCursor.getString(contactCursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
 
       int hasPhone = contactCursor.getInt(contactCursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-      if (hasPhone > 0) {
+      if(hasPhone > 0) {
         Cursor phones = getContentResolver().query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
@@ -123,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
         if(phones.moveToFirst()) {
           String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
           edtxReceiverPhoneNumber.setText(phoneNumber);
+
+          txtvwReceiverNameFromContacts.setText(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+          txtvwReceiverNameFromContacts.setVisibility(View.VISIBLE);
         }
       }
     }
@@ -164,6 +174,23 @@ public class MainActivity extends AppCompatActivity {
           }
         }
       });
+    }
+  };
+
+  protected TextWatcher edtxReceiverPhoneNumberTextWatcher = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+      txtvwReceiverNameFromContacts.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
   };
 
