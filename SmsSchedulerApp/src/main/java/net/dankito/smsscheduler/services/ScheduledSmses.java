@@ -1,5 +1,6 @@
 package net.dankito.smsscheduler.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,18 @@ public class ScheduledSmses {
 
   protected void setScheduledSMSes(Map<Integer, ScheduledSms> scheduledSMSes) { // for Jackson
     this.scheduledSMSes = scheduledSMSes;
+  }
+
+  public int getHighestSchedulesSmsId() {
+    int highestId = 0;
+
+    for(int id : new ArrayList<>(scheduledSMSes.keySet())) {
+      if(id > highestId) {
+        highestId = id;
+      }
+    }
+
+    return highestId;
   }
 
 }
