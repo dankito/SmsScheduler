@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import net.dankito.android.util.controls.DateTimePicker;
 import net.dankito.android.util.controls.DateTimePickerCallback;
-import net.dankito.android.util.services.AlarmManagerCronService;
-import net.dankito.android.util.services.ICronService;
-import net.dankito.android.util.services.SmsService;
+import net.dankito.smsscheduler.services.ScheduledSms;
+import net.dankito.smsscheduler.services.ScheduledSmsManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
   protected static final DateFormat EXECUTE_AT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
 
-  protected ICronService cronService;
-
-  protected SmsService smsService;
+  protected ScheduledSmsManager scheduledSmsManager;
 
 
   protected TextView txtvwExecuteAt;
@@ -45,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
   protected void setupDependencies() {
-    cronService = new AlarmManagerCronService(this);
-    smsService = new SmsService();
+    scheduledSmsManager = new ScheduledSmsManager(this);
   }
 
   protected void setupUi() {
@@ -81,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
 
 
   protected void scheduleSms() {
+    Calendar executeAt = (Calendar)txtvwExecuteAt.getTag();
     String receiverPhoneNumber = edtxReceiverPhoneNumber.getText().toString();
     String messageText = edtxMessageText.getText().toString();
 
-    smsService.sendTextSms(receiverPhoneNumber, messageText);
+    scheduledSmsManager.scheduleSms(new ScheduledSms(executeAt, receiverPhoneNumber, messageText));
   }
 
 
