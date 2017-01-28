@@ -12,7 +12,28 @@
     tools:context="net.dankito.smsscheduler.MainActivity">
 
     <TextView
+        android:id="@+id/txtvwReceiverPhoneNumberLabel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_height="@dimen/receiver_phone_number_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        style="@android:style/TextAppearance.Medium"
+        android:text="@string/receiver_phone_number_label"
+    />
+
+    <EditText
+        android:id="@+id/edtxReceiverPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/receiver_phone_number_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/txtvwReceiverPhoneNumberLabel"
+        android:layout_marginLeft="@dimen/receiver_phone_number_margin_right"
+        android:gravity="center_vertical"
+        style="@android:style/TextAppearance.Medium"
+    />
+
+
+
 </RelativeLayout>

@@ -1,3 +1,7 @@
 <resources>
+
     <string name="app_name">SmsScheduler</string>
+
+    <string name="receiver_phone_number_label">Receiver Number:</string>
+
 </resources>

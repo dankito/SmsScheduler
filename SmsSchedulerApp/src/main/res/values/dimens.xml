@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
+
+    <dimen name="receiver_phone_number_height">40dp</dimen>
+    <dimen name="receiver_phone_number_margin_right">12dp</dimen>
+
 </resources>
