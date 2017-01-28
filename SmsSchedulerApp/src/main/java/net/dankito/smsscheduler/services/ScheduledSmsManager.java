@@ -40,16 +40,18 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
   protected synchronized void setupDependencies(Context context) {
-    this.cronService = new AlarmManagerCronService(context);
+    this.fileStorageService = new AndroidFileStorageService(context);
+
+    try {
+      scheduledSMSes = fileStorageService.readObjectFromFile(SCHEDULES_SMSES_FILENAME, ScheduledSmses.class);
+    } catch(Exception e) {
+      scheduledSMSes = new ScheduledSmses();
+      log.error("Could not read schedules SMSes from file", e);
+    }
 
     this.smsService = new SmsService();
 
-    this.fileStorageService = new AndroidFileStorageService(context);
-
-    scheduledSMSes = new ScheduledSmses();
-    try {
-      scheduledSMSes = fileStorageService.readObjectFromFile(SCHEDULES_SMSES_FILENAME, ScheduledSmses.class);
-    } catch(Exception e) { log.error("Could not read schedules SMSes from file", e); }
+    this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getHighestSchedulesSmsId());
   }
 
 
