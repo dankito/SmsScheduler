@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">SmsScheduler</string>
+    <string name="app_name">SMS Scheduler</string>
 
     <string name="execute_at_label">Execute at:</string>
     <string name="receiver_phone_number_label">Receiver Number:</string>
