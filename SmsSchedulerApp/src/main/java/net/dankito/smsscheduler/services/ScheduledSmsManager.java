@@ -28,6 +28,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   private static final Logger log = LoggerFactory.getLogger(ScheduledSmsManager.class);
 
 
+  protected Activity activity;
+
   protected ICronService cronService;
 
   protected SmsService smsService;
@@ -44,6 +46,7 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
   public ScheduledSmsManager(Activity activity) {
+    this.activity = activity;
     setupDependencies(activity);
   }
 
@@ -68,7 +71,9 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
 
   public void scheduleSms(final ScheduledSms scheduledSms) {
-    permissionsManager.checkPermission(Manifest.permission.SEND_SMS, R.string.rationale_send_sms, new PermissionRequestCallback() {
+    String rationale = activity.getString(R.string.rationale_send_sms, scheduledSms.getReceiverPhoneNumber());
+
+    permissionsManager.checkPermission(Manifest.permission.SEND_SMS, rationale, new PermissionRequestCallback() {
       @Override
       public void permissionCheckDone(String permission, boolean isGranted) {
         if(isGranted) {
@@ -101,9 +106,11 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context context, Intent intent) {
+    log.info("Woke up from BroadcastReceiver");
     setupDependencies(context);
 
     int cronJobId = intent.getIntExtra(AlarmManagerCronService.CRON_JOB_TOKEN_NUMBER_EXTRA_NAME, -1);
+    log.info("ScheduledSms' Id is " + cronJobId);
     if(cronJobId > 0) {
       ScheduledSms scheduledSms = scheduledSMSes.getAndRemove(cronJobId);
       if(scheduledSms != null) {
