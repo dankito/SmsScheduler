@@ -52,12 +52,21 @@
         android:id="@+id/edtxReceiverPhoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/receiver_phone_number_height"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/txtvwExecuteAt"
         android:layout_toRightOf="@+id/txtvwReceiverPhoneNumberLabel"
+        android:layout_toLeftOf="@+id/btnPickReceiverPhoneNumberFromContacts"
         android:layout_marginLeft="@dimen/receiver_phone_number_margin_left"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+    />
+
+    <Button
+        android:id="@+id/btnPickReceiverPhoneNumberFromContacts"
+        android:layout_width="40dp"
+        android:layout_height="@dimen/receiver_phone_number_height"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtvwExecuteAt"
+        android:text="..."
     />
 
 
