@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">SMS Scheduler</string>
+
+    <string name="execute_at_label">Ausführen an:</string>
+    <string name="receiver_phone_number_label">Empfängernummer:</string>
+    <string name="message_text_label">Nachricht:</string>
+    <string name="schedule_sms">Planen</string>
+
+</resources>
