@@ -54,10 +54,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:layout_below="@+id/txtvwMessageTextLabel"
+        android:layout_above="@+id/btnScheduleSms"
         android:gravity="left|top"
         style="@android:style/TextAppearance.Medium"
+    />
+
+    <Button
+        android:id="@+id/btnScheduleSms"
+        android:layout_width="@dimen/button_schedule_sms_width"
+        android:layout_height="@dimen/button_schedule_sms_height"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/schedule_sms"
     />
 
 

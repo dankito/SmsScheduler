@@ -4,5 +4,6 @@
 
     <string name="receiver_phone_number_label">Receiver Number:</string>
     <string name="message_text_label">Message:</string>
+    <string name="schedule_sms">Schedule</string>
 
 </resources>
