@@ -1,1 +1,6 @@
 include ':SmsSchedulerApp'
+include ':AndroidUtils'
+include ':JavaUtils'
+
+project(':AndroidUtils').projectDir = new File('libs/AndroidUtils/AndroidUtilsLib')
+project(':JavaUtils').projectDir = new File('libs/AndroidUtils/JavaUtils')

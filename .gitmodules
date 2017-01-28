@@ -1,0 +1,3 @@
+[submodule "libs/AndroidUtils"]
+	path = libs/AndroidUtils
+	url = https://github.com/dankito/AndroidUtils
