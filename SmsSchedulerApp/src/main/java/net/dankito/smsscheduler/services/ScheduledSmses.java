@@ -33,6 +33,11 @@ public class ScheduledSmses {
     this.scheduledSMSes = scheduledSMSes;
   }
 
+
+  public int getCount() {
+    return scheduledSMSes.size();
+  }
+
   public int getHighestSchedulesSmsId() {
     int highestId = 0;
 
