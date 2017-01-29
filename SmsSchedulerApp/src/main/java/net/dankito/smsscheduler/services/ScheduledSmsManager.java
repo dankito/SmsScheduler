@@ -12,7 +12,6 @@ import net.dankito.android.util.services.AndroidFileStorageService;
 import net.dankito.android.util.services.ICronService;
 import net.dankito.android.util.services.IPermissionsManager;
 import net.dankito.android.util.services.PermissionRequestCallback;
-import net.dankito.android.util.services.PermissionsManager;
 import net.dankito.android.util.services.SmsService;
 import net.dankito.smsscheduler.R;
 import net.dankito.utils.services.IFileStorageService;
@@ -34,6 +33,9 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   protected SmsService smsService;
 
+  /**
+   * Can be null if called from BroadcastReceiver's onReceive()
+   */
   protected IPermissionsManager permissionsManager;
 
   protected IFileStorageService fileStorageService;
@@ -45,8 +47,10 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   }
 
-  public ScheduledSmsManager(Activity activity) {
+  public ScheduledSmsManager(Activity activity, IPermissionsManager permissionsManager) {
     this.activity = activity;
+    this.permissionsManager = permissionsManager;
+
     setupDependencies(activity);
   }
 
@@ -63,10 +67,6 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     this.smsService = new SmsService();
 
     this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getHighestSchedulesSmsId());
-
-    if(context instanceof Activity) { // only when called from MainActivity, not from BroadcastReceiver's onReceive()
-      permissionsManager = new PermissionsManager((Activity)context);
-    }
   }
 
 

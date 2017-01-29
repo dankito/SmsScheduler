@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
 
   protected void setupDependencies() {
-    scheduledSmsManager = new ScheduledSmsManager(this);
-
     permissionsManager = new PermissionsManager(this);
+
+    scheduledSmsManager = new ScheduledSmsManager(this, permissionsManager);
   }
 
   protected void setupUi() {
