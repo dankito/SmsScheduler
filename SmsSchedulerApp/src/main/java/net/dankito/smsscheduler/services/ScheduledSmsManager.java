@@ -126,6 +126,11 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
 
+  public ScheduledSmses getScheduledSMSes() {
+    return scheduledSMSes;
+  }
+
+
   @Override
   public void onReceive(Context context, Intent intent) {
     log.info("Woke up from BroadcastReceiver");
