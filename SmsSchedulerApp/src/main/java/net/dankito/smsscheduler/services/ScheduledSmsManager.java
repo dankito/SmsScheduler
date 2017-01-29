@@ -19,6 +19,9 @@ import net.dankito.utils.services.IFileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ScheduledSmsManager extends BroadcastReceiver {
 
@@ -41,6 +44,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   protected IFileStorageService fileStorageService;
 
   protected ScheduledSmses scheduledSMSes;
+
+  protected List<SchedulesSmsesListener> schedulesSmsesListeners = new ArrayList<>();
 
 
   public ScheduledSmsManager() { // for being waked up by AlarmManager
@@ -96,11 +101,28 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     try {
       fileStorageService.writeObjectToFile(scheduledSMSes, SCHEDULES_SMSES_FILENAME);
     } catch(Exception e) { log.error("Could not save scheduled SMSe", e); }
+
+    callSchedulesSmsesListeners();
   }
 
 
   protected void sendSms(ScheduledSms scheduledSms) {
     smsService.sendTextSms(scheduledSms.getReceiverPhoneNumber(), scheduledSms.getMessage());
+  }
+
+
+  public boolean addSchedulesSmsesListener(SchedulesSmsesListener listener) {
+    return schedulesSmsesListeners.add(listener);
+  }
+
+  public boolean removeSchedulesSmsesListener(SchedulesSmsesListener listener) {
+    return schedulesSmsesListeners.remove(listener);
+  }
+
+  protected void callSchedulesSmsesListeners() {
+    for(SchedulesSmsesListener listener : schedulesSmsesListeners) {
+      listener.scheduledSmsesChanged(scheduledSMSes);
+    }
   }
 
 
