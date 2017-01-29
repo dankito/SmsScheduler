@@ -14,10 +14,12 @@ public class ScheduledSmses {
     return scheduledSMSes.get(scheduledSmsId);
   }
 
-  public ScheduledSms getAndRemove(int scheduledSmsId) {
-    ScheduledSms scheduledSms = scheduledSMSes.remove(scheduledSmsId);
+  public boolean remove(int scheduledSmsId) {
+    return getAndRemove(scheduledSmsId) != null;
+  }
 
-    return scheduledSms;
+  public ScheduledSms getAndRemove(int scheduledSmsId) {
+    return scheduledSMSes.remove(scheduledSmsId);
   }
 
   public void add(ScheduledSms scheduledSms) {
