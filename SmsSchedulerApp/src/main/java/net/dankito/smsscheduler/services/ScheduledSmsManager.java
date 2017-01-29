@@ -111,6 +111,12 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
 
+  public void unscheduleSms(ScheduledSms scheduledSms) {
+    scheduledSMSes.getAndRemove(scheduledSms.getScheduledSmsId());
+    saveSchedulesSMSes();
+  }
+
+
   public boolean addSchedulesSmsesListener(SchedulesSmsesListener listener) {
     return schedulesSmsesListeners.add(listener);
   }
