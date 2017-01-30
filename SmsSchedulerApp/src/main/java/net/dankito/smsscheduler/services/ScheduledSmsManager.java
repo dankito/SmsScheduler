@@ -149,8 +149,22 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     log.info("Woke up from BroadcastReceiver");
     setupDependencies(context);
 
+    if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) { // Android system has booted
+      systemHasBooted(context);
+    }
+    else { // fired by ICronService
+      sendSmsIntentReceived(intent);
+    }
+  }
+
+  protected void systemHasBooted(Context context) {
+    // TODO
+  }
+
+  protected void sendSmsIntentReceived(Intent intent) {
     int cronJobId = intent.getIntExtra(AlarmManagerCronService.CRON_JOB_TOKEN_NUMBER_EXTRA_NAME, -1);
     log.info("ScheduledSms' Id is " + cronJobId);
+
     if(cronJobId > 0) {
       ScheduledSms scheduledSms = scheduledSMSes.getAndRemove(cronJobId);
       if(scheduledSms != null) {
