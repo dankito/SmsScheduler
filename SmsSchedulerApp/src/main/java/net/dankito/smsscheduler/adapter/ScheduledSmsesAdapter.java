@@ -13,6 +13,7 @@ import net.dankito.smsscheduler.services.ScheduledSms;
 import net.dankito.smsscheduler.services.ScheduledSmsManager;
 import net.dankito.smsscheduler.services.ScheduledSmses;
 import net.dankito.smsscheduler.services.SchedulesSmsesListener;
+import net.dankito.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -94,7 +95,12 @@ public class ScheduledSmsesAdapter extends BaseAdapter {
     txtScheduledSmsExecuteAt.setText(MainActivity.EXECUTE_AT_DATE_FORMAT.format(scheduledSms.getScheduledTime().getTime()));
 
     TextView txtScheduledSmsReceiverPhoneNumber = (TextView)convertView.findViewById(R.id.txtScheduledSmsReceiverPhoneNumber);
-    txtScheduledSmsReceiverPhoneNumber.setText(scheduledSms.getReceiverPhoneNumber());
+    if(StringUtils.isNullOrEmpty(scheduledSms.getReceiverName())) {
+      txtScheduledSmsReceiverPhoneNumber.setText(scheduledSms.getReceiverPhoneNumber());
+    }
+    else {
+      txtScheduledSmsReceiverPhoneNumber.setText(scheduledSms.getReceiverName() + " (" + scheduledSms.getReceiverPhoneNumber() + ")");
+    }
 
     TextView txtScheduledSmsMessage = (TextView)convertView.findViewById(R.id.txtScheduledSmsMessage);
     txtScheduledSmsMessage.setText(scheduledSms.getMessage());
