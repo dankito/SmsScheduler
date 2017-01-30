@@ -112,8 +112,10 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
 
   public void unscheduleSms(ScheduledSms scheduledSms) {
-    scheduledSMSes.getAndRemove(scheduledSms.getScheduledSmsId());
-    saveSchedulesSMSes();
+    if(cronService.cancelJob(scheduledSms.getScheduledSmsId())) {
+      scheduledSMSes.remove(scheduledSms.getScheduledSmsId());
+      saveSchedulesSMSes();
+    }
   }
 
 
