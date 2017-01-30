@@ -176,9 +176,10 @@ public class MainActivity extends AppCompatActivity {
   protected void scheduleSms() {
     Calendar executeAt = (Calendar)txtvwExecuteAt.getTag();
     String receiverPhoneNumber = edtxReceiverPhoneNumber.getText().toString();
+    String receiverName = txtvwReceiverNameFromContacts.getVisibility() == View.VISIBLE ? txtvwReceiverNameFromContacts.getText().toString() : "";
     String messageText = edtxMessageText.getText().toString();
 
-    scheduledSmsManager.scheduleSms(new ScheduledSms(executeAt, receiverPhoneNumber, messageText));
+    scheduledSmsManager.scheduleSms(new ScheduledSms(executeAt, receiverPhoneNumber, receiverName, messageText));
   }
 
 
