@@ -1,6 +1,5 @@
 package net.dankito.smsscheduler.services;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +7,8 @@ import java.util.Map;
 public class ScheduledSmses {
 
   protected Map<Integer, ScheduledSms> scheduledSMSes = new HashMap<>();
+
+  protected int lastScheduledSmsId = 0;
 
 
   public ScheduledSms get(int scheduledSmsId) {
@@ -24,6 +25,8 @@ public class ScheduledSmses {
 
   public void add(ScheduledSms scheduledSms) {
     scheduledSMSes.put(scheduledSms.getScheduledSmsId(), scheduledSms);
+
+    lastScheduledSmsId = scheduledSms.getScheduledSmsId();
   }
 
 
@@ -40,16 +43,8 @@ public class ScheduledSmses {
     return scheduledSMSes.size();
   }
 
-  public int getHighestSchedulesSmsId() {
-    int highestId = 0;
-
-    for(int id : new ArrayList<>(scheduledSMSes.keySet())) {
-      if(id > highestId) {
-        highestId = id;
-      }
-    }
-
-    return highestId;
+  public int getLastScheduledSmsId() {
+    return lastScheduledSmsId;
   }
 
 }

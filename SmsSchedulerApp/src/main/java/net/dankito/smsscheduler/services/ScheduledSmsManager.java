@@ -75,7 +75,7 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
     this.smsService = new SmsService();
 
-    this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getHighestSchedulesSmsId());
+    this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getLastScheduledSmsId());
   }
 
 
