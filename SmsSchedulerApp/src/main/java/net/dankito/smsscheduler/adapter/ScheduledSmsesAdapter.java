@@ -38,6 +38,15 @@ public class ScheduledSmsesAdapter extends BaseAdapter {
     setSchedulesSmses();
   }
 
+  protected void setSchedulesSmsesThreadSafe() {
+    activity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        setSchedulesSmses();
+      }
+    });
+  }
+
   protected void setSchedulesSmses() {
     this.scheduledSmses = sortScheduledSmses(scheduledSmsManager.getScheduledSMSes().getScheduledSMSes().values());
 
@@ -101,7 +110,7 @@ public class ScheduledSmsesAdapter extends BaseAdapter {
   protected SchedulesSmsesListener schedulesSmsesListener = new SchedulesSmsesListener() {
     @Override
     public void scheduledSmsesChanged(ScheduledSmses scheduledSmses) {
-      setSchedulesSmses();
+      setSchedulesSmsesThreadSafe();
     }
   };
 
