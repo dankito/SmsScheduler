@@ -12,6 +12,7 @@ import net.dankito.android.util.services.AndroidFileStorageService;
 import net.dankito.android.util.services.ICronService;
 import net.dankito.android.util.services.IPermissionsManager;
 import net.dankito.android.util.services.PermissionRequestCallback;
+import net.dankito.android.util.services.PermissionsManager;
 import net.dankito.android.util.services.SmsService;
 import net.dankito.smsscheduler.R;
 import net.dankito.utils.services.IFileStorageService;
@@ -110,8 +111,10 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
 
-  protected void sendSms(ScheduledSms scheduledSms) {
-    smsService.sendTextSms(scheduledSms.getReceiverPhoneNumber(), scheduledSms.getMessage());
+  protected void sendSms(Context context, ScheduledSms scheduledSms) {
+    if(PermissionsManager.isPermissionGranted(context, Manifest.permission.SEND_SMS)) {
+      smsService.sendTextSms(scheduledSms.getReceiverPhoneNumber(), scheduledSms.getMessage());
+    }
   }
 
 
@@ -150,14 +153,14 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     setupDependencies(context);
 
     if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) { // Android system has booted
-      systemHasBooted(context);
+      systemHasBooted();
     }
     else { // fired by ICronService
-      sendSmsIntentReceived(intent);
+      sendSmsIntentReceived(context, intent);
     }
   }
 
-  protected void systemHasBooted(Context context) {
+  protected void systemHasBooted() {
     for(ScheduledSms scheduledSms : scheduledSMSes.getScheduledSMSes().values()) {
       int newCronJobId = cronService.scheduleOneTimeJob(new OneTimeJobConfig(scheduledSms.getScheduledTime(), ScheduledSmsManager.class));
       scheduledSMSes.updateId(scheduledSms, newCronJobId);
@@ -166,14 +169,14 @@ public class ScheduledSmsManager extends BroadcastReceiver {
     saveSchedulesSMSes();
   }
 
-  protected void sendSmsIntentReceived(Intent intent) {
+  protected void sendSmsIntentReceived(Context context, Intent intent) {
     int cronJobId = intent.getIntExtra(AlarmManagerCronService.CRON_JOB_TOKEN_NUMBER_EXTRA_NAME, -1);
     log.info("ScheduledSms' Id is " + cronJobId);
 
     if(cronJobId > 0) {
       ScheduledSms scheduledSms = scheduledSMSes.getAndRemove(cronJobId);
       if(scheduledSms != null) {
-        sendSms(scheduledSms);
+        sendSms(context, scheduledSms);
 
         if(instanceForApp != null) {
           instanceForApp.scheduledSMSes = scheduledSMSes; // update App's scheduledSMSes
