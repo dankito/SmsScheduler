@@ -30,6 +30,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             style="@android:style/TextAppearance.Medium"
+            android:textSize="@dimen/default_text_size"
             android:text="@string/scheduled_label"
         />
 
@@ -55,6 +56,7 @@
         android:layout_alignTop="@+id/txtvwExecuteAt"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
         android:text="@string/execute_at_label"
     />
 
@@ -68,6 +70,7 @@
         android:layout_marginLeft="@dimen/execute_at_margin_left"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
     />
 
 
@@ -80,6 +83,7 @@
         android:layout_alignBottom="@+id/edtxReceiverPhoneNumber"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
         android:text="@string/receiver_phone_number_label"
     />
 
@@ -93,6 +97,7 @@
         android:layout_marginLeft="@dimen/receiver_phone_number_margin_left"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
     />
 
     <Button
@@ -112,6 +117,7 @@
         android:layout_alignLeft="@+id/edtxReceiverPhoneNumber"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
         android:visibility="gone"
     />
 
@@ -126,6 +132,7 @@
         android:layout_marginBottom="@dimen/message_text_label_margin_bottom"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
         android:text="@string/message_text_label"
     />
 
@@ -139,6 +146,7 @@
         android:layout_above="@+id/btnScheduleSms"
         android:gravity="left|top"
         style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
     />
 
     <Button
