@@ -3,6 +3,9 @@
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
 
+    <dimen name="list_view_scheduled_smses_height">190dp</dimen>
+    <dimen name="list_view_scheduled_smses_margin_top">6dp</dimen>
+
     <dimen name="execute_at_height">40dp</dimen>
     <dimen name="execute_at_margin_left">12dp</dimen>
 
