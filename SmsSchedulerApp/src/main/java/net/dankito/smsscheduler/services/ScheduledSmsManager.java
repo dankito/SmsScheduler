@@ -27,6 +27,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
   protected static final String SCHEDULES_SMSES_FILENAME = "SchedulesSmses.json";
 
+  protected static ScheduledSmsManager instanceForApp = null; // so that BroadcastReceiver instance can access App's ScheduledSmsManager instance (e.g. for calling its listeners)
+
   private static final Logger log = LoggerFactory.getLogger(ScheduledSmsManager.class);
 
 
@@ -55,6 +57,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   public ScheduledSmsManager(Activity activity, IPermissionsManager permissionsManager) {
     this.activity = activity;
     this.permissionsManager = permissionsManager;
+
+    instanceForApp = this;
 
     setupDependencies(activity);
   }
@@ -128,8 +132,10 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
   protected void callSchedulesSmsesListeners() {
-    for(SchedulesSmsesListener listener : schedulesSmsesListeners) {
-      listener.scheduledSmsesChanged(scheduledSMSes);
+    if(instanceForApp != null) { // so that App's listener get called even though BroadcastReceiver has committed changes
+      for(SchedulesSmsesListener listener : instanceForApp.schedulesSmsesListeners) {
+        listener.scheduledSmsesChanged(scheduledSMSes);
+      }
     }
   }
 
