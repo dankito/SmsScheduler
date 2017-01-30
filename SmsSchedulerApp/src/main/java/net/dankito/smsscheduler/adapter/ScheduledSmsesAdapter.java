@@ -15,6 +15,9 @@ import net.dankito.smsscheduler.services.ScheduledSmses;
 import net.dankito.smsscheduler.services.SchedulesSmsesListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -36,9 +39,22 @@ public class ScheduledSmsesAdapter extends BaseAdapter {
   }
 
   protected void setSchedulesSmses() {
-    this.scheduledSmses = new ArrayList<>(scheduledSmsManager.getScheduledSMSes().getScheduledSMSes().values());
+    this.scheduledSmses = sortScheduledSmses(scheduledSmsManager.getScheduledSMSes().getScheduledSMSes().values());
 
     notifyDataSetChanged();
+  }
+
+  protected List<ScheduledSms> sortScheduledSmses(Collection<ScheduledSms> scheduledSmses) {
+    List<ScheduledSms> sortedSmses = new ArrayList<>(scheduledSmses);
+
+    Collections.sort(sortedSmses, new Comparator<ScheduledSms>() {
+      @Override
+      public int compare(ScheduledSms o1, ScheduledSms o2) {
+        return o1.getScheduledTime().compareTo(o2.getScheduledTime());
+      }
+    });
+
+    return sortedSmses;
   }
 
 
