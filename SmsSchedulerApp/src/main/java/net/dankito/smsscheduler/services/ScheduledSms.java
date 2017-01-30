@@ -13,7 +13,7 @@ public class ScheduledSms {
 
   protected String message;
 
-  protected int scheduledSmsId;
+  protected int cronJobId;
 
 
   protected ScheduledSms() { // for Jackson
@@ -65,12 +65,12 @@ public class ScheduledSms {
     this.message = message;
   }
 
-  public int getScheduledSmsId() {
-    return scheduledSmsId;
+  public int getCronJobId() {
+    return cronJobId;
   }
 
-  public void setScheduledSmsId(int scheduledSmsId) {
-    this.scheduledSmsId = scheduledSmsId;
+  public void setCronJobId(int cronJobId) {
+    this.cronJobId = cronJobId;
   }
 
 

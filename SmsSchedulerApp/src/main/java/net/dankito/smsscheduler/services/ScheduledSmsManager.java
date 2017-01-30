@@ -76,7 +76,7 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
     this.smsService = new SmsService();
 
-    this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getLastScheduledSmsId());
+    this.cronService = new AlarmManagerCronService(context, scheduledSMSes.getLastCronJobId());
   }
 
 
@@ -96,7 +96,7 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   protected void scheduleSmsPermissionGranted(ScheduledSms scheduledSms) {
     int cronJobId = cronService.scheduleOneTimeJob(new OneTimeJobConfig(scheduledSms.getScheduledTime(), ScheduledSmsManager.class));
 
-    scheduledSms.setScheduledSmsId(cronJobId);
+    scheduledSms.setCronJobId(cronJobId);
     scheduledSMSes.add(scheduledSms);
 
     saveSchedulesSMSes();
@@ -119,8 +119,8 @@ public class ScheduledSmsManager extends BroadcastReceiver {
 
 
   public void unscheduleSms(ScheduledSms scheduledSms) {
-    cronService.cancelJob(scheduledSms.getScheduledSmsId());
-    scheduledSMSes.remove(scheduledSms.getScheduledSmsId());
+    cronService.cancelJob(scheduledSms.getCronJobId());
+    scheduledSMSes.remove(scheduledSms.getCronJobId());
     saveSchedulesSMSes();
   }
 
@@ -163,7 +163,7 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   protected void systemHasBooted() {
     for(ScheduledSms scheduledSms : scheduledSMSes.getScheduledSMSes().values()) {
       int newCronJobId = cronService.scheduleOneTimeJob(new OneTimeJobConfig(scheduledSms.getScheduledTime(), ScheduledSmsManager.class));
-      scheduledSMSes.updateId(scheduledSms, newCronJobId);
+      scheduledSMSes.updateCronJobId(scheduledSms, newCronJobId);
     }
 
     saveSchedulesSMSes();

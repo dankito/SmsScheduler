@@ -8,7 +8,7 @@ public class ScheduledSmses {
 
   protected Map<Integer, ScheduledSms> scheduledSMSes = new HashMap<>();
 
-  protected int lastScheduledSmsId = 0;
+  protected int lastCronJobId = 0;
 
 
   public ScheduledSms get(int scheduledSmsId) {
@@ -24,15 +24,15 @@ public class ScheduledSmses {
   }
 
   public void add(ScheduledSms scheduledSms) {
-    scheduledSMSes.put(scheduledSms.getScheduledSmsId(), scheduledSms);
+    scheduledSMSes.put(scheduledSms.getCronJobId(), scheduledSms);
 
-    lastScheduledSmsId = scheduledSms.getScheduledSmsId();
+    lastCronJobId = scheduledSms.getCronJobId();
   }
 
-  public void updateId(ScheduledSms scheduledSms, int newId) {
-    remove(scheduledSms.getScheduledSmsId());
+  public void updateCronJobId(ScheduledSms scheduledSms, int newId) {
+    remove(scheduledSms.getCronJobId());
 
-    scheduledSms.setScheduledSmsId(newId);
+    scheduledSms.setCronJobId(newId);
     add(scheduledSms);
   }
 
@@ -50,8 +50,8 @@ public class ScheduledSmses {
     return scheduledSMSes.size();
   }
 
-  public int getLastScheduledSmsId() {
-    return lastScheduledSmsId;
+  public int getLastCronJobId() {
+    return lastCronJobId;
   }
 
 }
