@@ -158,7 +158,12 @@ public class ScheduledSmsManager extends BroadcastReceiver {
   }
 
   protected void systemHasBooted(Context context) {
-    // TODO
+    for(ScheduledSms scheduledSms : scheduledSMSes.getScheduledSMSes().values()) {
+      int newCronJobId = cronService.scheduleOneTimeJob(new OneTimeJobConfig(scheduledSms.getScheduledTime(), ScheduledSmsManager.class));
+      scheduledSMSes.updateId(scheduledSms, newCronJobId);
+    }
+
+    saveSchedulesSMSes();
   }
 
   protected void sendSmsIntentReceived(Intent intent) {
