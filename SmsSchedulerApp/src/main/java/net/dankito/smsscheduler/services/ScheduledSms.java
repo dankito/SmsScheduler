@@ -56,4 +56,11 @@ public class ScheduledSms {
   public void setScheduledSmsId(int scheduledSmsId) {
     this.scheduledSmsId = scheduledSmsId;
   }
+
+
+  @Override
+  public String toString() {
+    return getScheduledTime().getTime() + " " + getReceiverPhoneNumber();
+  }
+
 }
