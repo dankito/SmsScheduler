@@ -12,12 +12,47 @@
     tools:context="net.dankito.smsscheduler.MainActivity">
 
 
+    <RelativeLayout
+        android:id="@+id/rlytScheduledSmses"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_view_scheduled_smses_height"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+    >
+
+        <TextView
+            android:id="@+id/txtvwSchedulesSmsesLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            style="@android:style/TextAppearance.Medium"
+            android:text="@string/scheduled_label"
+        />
+
+        <ListView
+            android:id="@+id/lstvwScheduledSmses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/txtvwSchedulesSmsesLabel"
+            android:layout_marginTop="@dimen/list_view_scheduled_smses_margin_top"
+        />
+
+    </RelativeLayout>
+
+
     <TextView
         android:id="@+id/txtvwExecuteAtLabel"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/execute_at_height"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/txtvwExecuteAt"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
         android:text="@string/execute_at_label"
@@ -27,8 +62,8 @@
         android:id="@+id/txtvwExecuteAt"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/execute_at_height"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/rlytScheduledSmses"
         android:layout_toRightOf="@+id/txtvwExecuteAtLabel"
         android:layout_marginLeft="@dimen/execute_at_margin_left"
         android:gravity="center_vertical"
