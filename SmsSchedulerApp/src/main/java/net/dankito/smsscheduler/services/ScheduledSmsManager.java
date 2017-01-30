@@ -156,6 +156,11 @@ public class ScheduledSmsManager extends BroadcastReceiver {
       ScheduledSms scheduledSms = scheduledSMSes.getAndRemove(cronJobId);
       if(scheduledSms != null) {
         sendSms(scheduledSms);
+
+        if(instanceForApp != null) {
+          instanceForApp.scheduledSMSes = scheduledSMSes; // update App's scheduledSMSes
+        }
+
         saveSchedulesSMSes();
       }
     }
