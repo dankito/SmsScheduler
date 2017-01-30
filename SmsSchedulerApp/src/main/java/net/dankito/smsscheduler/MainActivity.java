@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     rlytScheduledSmses = (RelativeLayout)findViewById(R.id.rlytScheduledSmses);
-    rlytScheduledSmses.setVisibility(scheduledSmsManager.getScheduledSMSes().getCount() > 0 ? View.VISIBLE : View.GONE);
+    scheduledSmsesChangedOnUiThread(scheduledSmsManager.getScheduledSMSes());
 
     ListView lstvwScheduledSmses = (ListView)findViewById(R.id.lstvwScheduledSmses);
     lstvwScheduledSmses.setAdapter(new ScheduledSmsesAdapter(this, scheduledSmsManager));
@@ -98,6 +98,19 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnScheduleSms = (Button)findViewById(R.id.btnScheduleSms);
     btnScheduleSms.setOnClickListener(btnScheduleSmsClickListener);
+  }
+
+  protected void scheduledSmsesChanged(final ScheduledSmses scheduledSmses) {
+    runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        scheduledSmsesChangedOnUiThread(scheduledSmses);
+      }
+    });
+  }
+
+  protected void scheduledSmsesChangedOnUiThread(ScheduledSmses scheduledSmses) {
+    rlytScheduledSmses.setVisibility(scheduledSmses.getCount() > 0 ? View.VISIBLE : View.GONE);
   }
 
   protected void setExecuteAtToInitialValue() {
@@ -186,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
   protected SchedulesSmsesListener schedulesSmsesListener = new SchedulesSmsesListener() {
     @Override
     public void scheduledSmsesChanged(ScheduledSmses scheduledSmses) {
-      rlytScheduledSmses.setVisibility(scheduledSmses.getCount() > 0 ? View.VISIBLE : View.GONE);
+      MainActivity.this.scheduledSmsesChanged(scheduledSmses);
     }
   };
 
