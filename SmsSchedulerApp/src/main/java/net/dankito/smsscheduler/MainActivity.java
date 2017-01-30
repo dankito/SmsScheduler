@@ -14,6 +14,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.dankito.android.util.controls.DateTimePicker;
@@ -21,8 +23,11 @@ import net.dankito.android.util.controls.DateTimePickerCallback;
 import net.dankito.android.util.services.IPermissionsManager;
 import net.dankito.android.util.services.PermissionRequestCallback;
 import net.dankito.android.util.services.PermissionsManager;
+import net.dankito.smsscheduler.adapter.ScheduledSmsesAdapter;
 import net.dankito.smsscheduler.services.ScheduledSms;
 import net.dankito.smsscheduler.services.ScheduledSmsManager;
+import net.dankito.smsscheduler.services.ScheduledSmses;
+import net.dankito.smsscheduler.services.SchedulesSmsesListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
   protected static final int PICK_CONTACT_REQUEST_ID = 27388;
 
-  protected static final DateFormat EXECUTE_AT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+  public static final DateFormat EXECUTE_AT_DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
 
   protected ScheduledSmsManager scheduledSmsManager;
 
   protected IPermissionsManager permissionsManager;
 
+
+  protected RelativeLayout rlytScheduledSmses;
 
   protected TextView txtvwExecuteAt;
 
@@ -63,10 +70,17 @@ public class MainActivity extends AppCompatActivity {
     permissionsManager = new PermissionsManager(this);
 
     scheduledSmsManager = new ScheduledSmsManager(this, permissionsManager);
+    scheduledSmsManager.addSchedulesSmsesListener(schedulesSmsesListener);
   }
 
   protected void setupUi() {
     setContentView(R.layout.activity_main);
+
+    rlytScheduledSmses = (RelativeLayout)findViewById(R.id.rlytScheduledSmses);
+    rlytScheduledSmses.setVisibility(scheduledSmsManager.getScheduledSMSes().getCount() > 0 ? View.VISIBLE : View.GONE);
+
+    ListView lstvwScheduledSmses = (ListView)findViewById(R.id.lstvwScheduledSmses);
+    lstvwScheduledSmses.setAdapter(new ScheduledSmsesAdapter(this, scheduledSmsManager));
 
     txtvwExecuteAt = (TextView)findViewById(R.id.txtvwExecuteAt);
     txtvwExecuteAt.setOnClickListener(txtvwExecuteAtClickListener);
@@ -167,6 +181,13 @@ public class MainActivity extends AppCompatActivity {
     scheduledSmsManager.scheduleSms(new ScheduledSms(executeAt, receiverPhoneNumber, messageText));
   }
 
+
+  protected SchedulesSmsesListener schedulesSmsesListener = new SchedulesSmsesListener() {
+    @Override
+    public void scheduledSmsesChanged(ScheduledSmses scheduledSmses) {
+      rlytScheduledSmses.setVisibility(scheduledSmses.getCount() > 0 ? View.VISIBLE : View.GONE);
+    }
+  };
 
   protected View.OnClickListener txtvwExecuteAtClickListener = new View.OnClickListener() {
     @Override
