@@ -130,10 +130,23 @@
         android:layout_below="@+id/txtvwReceiverNameFromContacts"
         android:layout_marginTop="@dimen/message_text_label_margin_top"
         android:layout_marginBottom="@dimen/message_text_label_margin_bottom"
+        android:layout_marginRight="@dimen/message_text_label_margin_right"
         android:gravity="center_vertical"
         style="@android:style/TextAppearance.Medium"
         android:textSize="@dimen/default_text_size"
         android:text="@string/message_text_label"
+    />
+
+    <TextView
+        android:id="@+id/txtvwMessageLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/txtvwMessageTextLabel"
+        android:layout_alignTop="@+id/txtvwMessageTextLabel"
+        android:gravity="left|center_vertical"
+        style="@android:style/TextAppearance.Medium"
+        android:textSize="@dimen/default_text_size"
     />
 
     <EditText

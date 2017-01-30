@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
   protected TextView txtvwReceiverNameFromContacts;
 
+  protected TextView txtvwMessageLength;
+
   protected EditText edtxMessageText;
 
 
@@ -94,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
     txtvwReceiverNameFromContacts = (TextView)findViewById(R.id.txtvwReceiverNameFromContacts);
 
+    txtvwMessageLength = (TextView)findViewById(R.id.txtvwMessageLength);
+
     edtxMessageText = (EditText)findViewById(R.id.edtxMessageText);
+    edtxMessageText.addTextChangedListener(edtxMessageTextTextWatcher);
 
     Button btnScheduleSms = (Button)findViewById(R.id.btnScheduleSms);
     btnScheduleSms.setOnClickListener(btnScheduleSmsClickListener);
@@ -241,6 +246,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onClick(View v) {
       pickReceiverFromContacts();
+    }
+  };
+
+  protected TextWatcher edtxMessageTextTextWatcher = new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence string, int start, int before, int count) {
+      txtvwMessageLength.setText("(" + string.length() + ")");
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
   };
 
