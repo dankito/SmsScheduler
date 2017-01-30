@@ -29,6 +29,13 @@ public class ScheduledSmses {
     lastScheduledSmsId = scheduledSms.getScheduledSmsId();
   }
 
+  public void updateId(ScheduledSms scheduledSms, int newId) {
+    remove(scheduledSms.getScheduledSmsId());
+
+    scheduledSms.setScheduledSmsId(newId);
+    add(scheduledSms);
+  }
+
 
   public Map<Integer, ScheduledSms> getScheduledSMSes() { // for Jackson
     return scheduledSMSes;
