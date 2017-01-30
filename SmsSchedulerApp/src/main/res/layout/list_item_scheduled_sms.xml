@@ -22,6 +22,7 @@
         android:layout_toLeftOf="@+id/imgvwScheduledSmsDelete"
         android:layout_marginLeft="@dimen/list_item_scheduled_smses_phone_number_margin_left"
         android:gravity="center_vertical"
+        android:lines="1"
         android:ellipsize="end"
         style="@android:style/TextAppearance.Medium"
     />
@@ -34,6 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/txtScheduledSmsExecuteAt"
         android:layout_toLeftOf="@+id/imgvwScheduledSmsDelete"
+        android:lines="1"
         android:ellipsize="end"
         style="@android:style/TextAppearance.Medium"
     />
